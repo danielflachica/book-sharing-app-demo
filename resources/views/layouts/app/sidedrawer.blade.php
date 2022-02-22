@@ -9,6 +9,22 @@
           </span>
         </div>
 
+        @if(Route::has('home'))
+          <a class="block p-4 hover:bg-secondary-light hover:text-white"
+            href="{{ route('home') }}">
+            <i class="material-icons mr-2">home</i>
+            Home
+          </a>
+        @endif
+
+        @if(Route::has('user.books.index'))
+          <a class="block p-4 hover:bg-secondary-light hover:text-white"
+            href="{{ route('user.books.index') }}">
+            <i class="material-icons mr-2">menu_book</i>
+            My Books
+          </a>
+        @endif
+
         @if(Route::has('user.profile.show'))
           <a class="block p-4 hover:bg-secondary-light hover:text-white"
             href="{{ route('user.profile.show') }}">
@@ -22,14 +38,6 @@
             href="{{ route('admin.admins.index') }}">
             <i class="material-icons mr-2">groups</i>
             Admins
-          </a>
-        @endif
-
-        @if(Route::has('user.books.index'))
-          <a class="block p-4 hover:bg-secondary-light hover:text-white"
-            href="{{ route('user.books.index') }}">
-            <i class="material-icons mr-2">menu_book</i>
-            My Books
           </a>
         @endif
 

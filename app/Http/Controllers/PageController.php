@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,8 @@ class PageController extends Controller
     public function home()
     {
         if(Auth::check()) {
-            return view('user.home');
+            $books = Book::orderBy('updated_at', 'DESC')->get();
+            return view('user.home', compact('books'));
         }
         return view('landing');
     }
