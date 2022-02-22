@@ -20,7 +20,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::where('added_by', Auth::id())->orderBy('updated_at', 'DESC')->get();
+        $books = Book::where('added_by', Auth::id())->orderBy('updated_at', 'DESC')->paginate(15);
         $uri = 'books';
         return view('user.books.index', compact('books', 'uri'));
     }

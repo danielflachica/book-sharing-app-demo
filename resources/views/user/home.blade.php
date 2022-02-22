@@ -9,6 +9,9 @@
       @endcomponent
 
       <card-basic title="Book Catalogue">
+        <div class="mb-4">
+          {{ $books->links() }}
+        </div>
         <div class="grid grid-col-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
 
           @foreach($books as $book)
@@ -22,6 +25,9 @@
             </book-preview>
           @endforeach
 
+        </div>
+        <div class="mt-4">
+          {{ $books->links() }}
         </div>
         <template v-slot:footer>
           <div class="flex flex-wrap justify-end">
