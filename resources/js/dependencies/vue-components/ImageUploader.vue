@@ -26,14 +26,15 @@
       </input-basic>
 
       <div class="w-full" v-if="imageType == 'url'"> 
-        <input-basic 
+        <input-basic label="Image URL"
           class="w-full"
           type="url"
           :name="name"
           pattern="https?://.+[.jpg, .jpeg, .png, .JPG, .JPEG, .PNG]$"
           placeholder="Paste a valid image URL"
           :error="error"
-          :footertext="helpMsg + ' Please ensure that you have proper access rights.'">
+          :footertext="helpMsg + ' Please ensure that you have proper access rights.'"
+          required>
         </input-basic>
         <input-basic
           class="hidden"
