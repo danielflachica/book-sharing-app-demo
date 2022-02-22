@@ -102,7 +102,7 @@ class BookController extends Controller
                 }
             } 
             else {
-                return back()->with('error', 'Something went wrong when saving your book\'s cover photo');
+                return back()->with('error', 'Something went wrong when saving your book\'s cover photo.');
             }
         }
 
@@ -151,7 +151,15 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+        if ($book->uploader->id != Auth::id()) {
+            return back()->with('error', 'You can\'t delete other people\'s books!');
+        }
+
+        $title = $book->title;
+        if ($book->delete()) {
+            return redirect(route('user.books.index'))->with('success', 'Deleted '.$title.'.');
+        }
+        return back()->with('error', 'Could not delete '.$title.'.');
     }
 
     public static function uploadImage($upload, $bookID)

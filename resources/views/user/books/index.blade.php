@@ -12,19 +12,28 @@
       @endcomponent
 
       <card-basic title="My Books">
-        <div class="grid grid-col-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
+        <div class="mb-4">
+          {{ $books->links() }}
+        </div>
+        <div class="grid grid-col-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
 
           @foreach($books as $book)
             <book-preview
-              cover_photo="{{ $book->coverPhoto ? Storage::disk('public')->url($book->coverPhoto->image_path) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/2048px-No_image_available.svg.png' }}"
+              cover_photo="{{ $book->coverPhoto ? Storage::disk('public')->url($book->coverPhoto->image_path) : '' }}"
               title="{{ $book->title }}"
               isbn="{{ $book->isbn }}"
               year="{{ $book->year }}"
               added_by="{{ $book->uploader->name }}"
-              last_updated="{{ $book->updated_at->diffForHumans() }}" />
+              last_updated="{{ $book->updated_at->diffForHumans() }}"
+              editable
+              csrf="{{ csrf_token() }}"
+              delete_route="{{ route('user.books.destroy', ['book' => $book->id]) }}" />
             </book-preview>
           @endforeach
 
+        </div>
+        <div class="mt-4">
+          {{ $books->links() }}
         </div>
         <template v-slot:footer>
           <div class="flex flex-wrap justify-end">
