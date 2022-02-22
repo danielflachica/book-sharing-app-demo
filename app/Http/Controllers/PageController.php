@@ -17,7 +17,7 @@ class PageController extends Controller
     public function home()
     {
         if(Auth::check()) {
-            $books = Book::orderBy('updated_at', 'DESC')->get();
+            $books = Book::orderBy('updated_at', 'DESC')->paginate(15);
             return view('user.home', compact('books'));
         }
         return view('landing');
