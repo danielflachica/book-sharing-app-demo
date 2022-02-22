@@ -1,0 +1,175 @@
+// v1.0.0
+// Buttons
+
+@layer components {
+    // .btn
+
+    .btn {
+        @apply flex justify-center items-center rounded text-center;
+    }
+
+    // .btn sizes
+
+    .btn-default {
+        @apply btn;
+        @apply py-2 px-4 border-2;
+    }
+
+    .btn-lg {
+        @apply btn;
+        @apply py-3 px-8 border-2 text-2xl;
+    }
+
+    // .btn-*-style
+
+    .btn-dark-style {
+        @apply hover:bg-gray-800 hover:border-transparent hover:text-white active:bg-gray-600 active:text-white;
+    }
+
+    .btn-danger-style {
+        @apply hover:bg-red-800 hover:border-transparent hover:text-white active:bg-red-400 active:text-white;
+    }
+
+    .btn-primary-style {
+        @apply hover:bg-primary hover:border-transparent hover:text-white active:bg-primary-light active:text-white;
+    }
+
+    .btn-secondary-style {
+        @apply hover:bg-secondary hover:border-transparent hover:text-white active:bg-secondary-light active:text-white;
+    }
+
+    // .btn-*
+    // btn-dark btn-danger btn-primary btn-secondary
+
+    .btn-dark {
+        @apply btn-default btn-dark-style;
+        @apply bg-black text-white border-transparent;
+    }
+
+    .btn-disabled {
+        @apply btn-default;
+        @apply bg-gray-400 text-white border-transparent;
+    }
+
+    .btn-danger {
+        @apply btn-default btn-danger-style;
+        @apply bg-red-600 text-white border-transparent;
+    }
+
+    .btn-primary {
+        @apply btn-default btn-primary-style;
+        @apply bg-primary text-white border-transparent;
+    }
+
+    .btn-secondary {
+        @apply btn-default btn-secondary-style;
+        @apply bg-secondary text-white border-transparent;
+    }
+
+    // .btn-lg-*
+    // btn-dark btn-primary btn-secondary
+
+    .btn-lg-dark {
+        @apply btn-lg btn-dark-style;
+        @apply bg-black text-white border-transparent;
+    }
+
+    .btn-lg-disabled {
+        @apply btn-lg;
+        @apply bg-gray-400 text-white border-transparent;
+    }
+
+    .btn-lg-primary {
+        @apply btn-lg btn-primary-style;
+        @apply bg-primary text-white border-transparent;
+    }
+
+    .btn-lg-secondary {
+        @apply btn-lg btn-secondary-style;
+        @apply bg-secondary text-white border-transparent;
+    }
+
+    // .btn-outlined-*
+    // btn-outlined-dark btn-outlined-danger btn-outlined-primary btn-outlined-secondary
+
+    .btn-outlined-dark {
+        @apply btn-default btn-dark-style;
+        @apply bg-transparent text-black border-black;
+    }
+
+    .btn-outlined-disabled {
+        @apply btn-default;
+        @apply bg-transparent text-gray-400 border-gray-400;
+    }
+
+    .btn-outlined-danger {
+        @apply btn-default btn-danger-style;
+        @apply bg-transparent text-red-600 border-red-600;
+    }
+
+    .btn-outlined-primary {
+        @apply btn-default btn-primary-style;
+        @apply bg-transparent text-primary border-primary;
+    }
+
+    .btn-outlined-secondary {
+        @apply btn-default btn-secondary-style;
+        @apply bg-transparent text-secondary border-secondary;
+    }
+
+    // .btn-outlined-lg-*
+    // btn-outlined-lg-dark btn-outlined-lg-danger btn-outlined-lg-secondary
+
+    .btn-outlined-lg-dark {
+        @apply btn-lg btn-dark-style;
+        @apply bg-transparent text-black border-black;
+    }
+
+    .btn-outlined-lg-disabled {
+        @apply btn-lg;
+        @apply bg-transparent text-gray-400 border-gray-400;
+    }
+
+    .btn-outlined-lg-danger {
+        @apply btn-lg btn-danger-style;
+        @apply bg-transparent text-red-600 border-red-600;
+    }
+
+    .btn-outlined-lg-primary {
+        @apply btn-lg btn-primary-style;
+        @apply bg-transparent text-primary border-primary;
+    }
+
+    .btn-outlined-lg-secondary {
+        @apply btn-lg btn-secondary-style;
+        @apply bg-transparent text-secondary border-secondary;
+    }
+
+    // .btn-text-*
+    // btn-text-dark btn-text-danger btn-text-primary btn-text-secondary
+
+    .btn-text-dark {
+        @apply btn-default btn-dark-style;
+        @apply bg-transparent border-transparent text-black;
+    }
+
+    .btn-text-disabled {
+        @apply btn-default;
+        @apply bg-transparent border-transparent text-gray-400;
+    }
+
+    .btn-text-danger {
+        @apply btn-default btn-danger-style;
+        @apply bg-transparent border-transparent text-red-600;
+    }
+
+    .btn-text-primary {
+        @apply btn-default btn-primary-style;
+        @apply bg-transparent border-transparent text-primary;
+    }
+
+    .btn-text-secondary {
+        @apply btn-default btn-secondary-style;
+        @apply bg-transparent border-transparent text-secondary;
+    }
+}

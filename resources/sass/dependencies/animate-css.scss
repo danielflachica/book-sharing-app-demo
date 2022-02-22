@@ -1,0 +1,12 @@
+// https://animate.style/
+@import "~animate.css/animate";
+
+// Custom Animations
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

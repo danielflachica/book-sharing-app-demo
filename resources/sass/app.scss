@@ -1,0 +1,24 @@
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Lora");
+
+// Tailwind CSS
+@import "./dependencies/tailwind";
+@import "./dependencies/tailwind-custom";
+@import "./dependencies/tailwind-custom-buttons";
+
+// Material Icons
+@import "./dependencies/material-icons";
+
+// Custom
+@import "./dependencies/animate-css";
+// @import "./dependencies/dropzone";
+
+// reCAPTCHA
+.grecaptcha-badge {
+    visibility: hidden;
+}
+
+// Applying Font
+html {
+    font-family: "Lora", serif;
+}
