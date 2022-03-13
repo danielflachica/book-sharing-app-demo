@@ -80,17 +80,20 @@ class BookController extends Controller
 
         // add cover photo to newly created book, if any
         $uploaded_file = null;
+        $path = null;
         // determine source of uploaded file (user or URL)
         if ($request->hasFile('cover_photo')) {
             // get photo from form
             $uploaded_file = $request->file('cover_photo');
+            // save updated image to storage
+            $path = BookController::uploadImage($uploaded_file, $book->id);
         }
         elseif ($request->from_url) {
             // get photo from url
             $uploaded_file = UrlUploadedFile::createFromUrl($request->cover_photo);
+            // save updated image to storage
+            $path = BookController::uploadImage($uploaded_file, $book->id);
         }
-        // save image to storage
-        $path = BookController::uploadImage($uploaded_file, $book->id);
         // save image path in database if not null
         if ($request->hasFile('cover_photo') || $request->from_url) {
             if ($path) {
@@ -144,7 +147,85 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required|string|between:1,255',
+            'isbn' => 'required|string|numeric|digits:13|starts_with:978,979',
+            'year' => 'nullable|integer|between:1000,'.Carbon::now()->year,
+            'edition' => array('nullable', 'string', 'regex:/^\d+(st|nd|rd|th)$/'),
+            'page_count' => 'nullable|integer|min:1',
+            'synopsis' => 'nullable|string|max:1000',
+            // 'cover_photo' => 'nullable|mimes:jpg,jpeg,png|max:1000',
+            // 'images' => 'nullable|image|max:2048',
+            // 'images.*' => 'nullable|mimes:jpg,jpeg,png|max:200'
+        ]);
+
+        // validate image url pattern
+        if ($request->from_url) {
+            if (!BookController::checkImageUrl($request->cover_photo)) {
+                return back()->with('error', 'The URL you specified does not point to a valid image.');
+            }
+        }
+
+        $book->title = $request->title;
+        $book->isbn = $request->isbn;
+        $book->year = $request->year;
+        $book->edition = $request->edition;
+        $book->page_count = $request->page_count;
+        $book->synopsis = $request->synopsis;
+
+        if (!$book->save()) {
+            return back()->with('error', 'Uh oh! We couldn\'t update your copy of '.$book->title.'.');
+        }
+
+        // add updated cover photo to created book, if any
+        $uploaded_file = null;
+        $path = null;
+        // determine source of uploaded file (user or URL)
+        if ($request->hasFile('cover_photo')) {
+            // get photo from form
+            $uploaded_file = $request->file('cover_photo');
+            // save updated image to storage
+            $path = BookController::uploadImage($uploaded_file, $book->id);
+        }
+        elseif ($request->from_url) {
+            // get photo from url
+            $uploaded_file = UrlUploadedFile::createFromUrl($request->cover_photo);
+            // save updated image to storage
+            $path = BookController::uploadImage($uploaded_file, $book->id);
+        }
+        // save updated image path in database if not null
+        if ($request->hasFile('cover_photo') || $request->from_url) {
+            if ($path) {
+                // unset all past cover photos of that book
+                $prev_cover_photos = BookImage::where('book_id', $book->id)->get();
+                if ($prev_cover_photos) {
+                    foreach ($prev_cover_photos as $img)  {
+                        $img->is_cover = FALSE;
+                        if (!$img->save()) {
+                            return back()->with('error', 'Something went wrong when updating your book\'s cover photo.');
+                        }
+                    }
+                }
+
+                $book_img = BookImage::where('book_id', $book->id)->first();
+                if (!$book_img) {
+                    $book_img = new BookImage();
+                }
+                $book_img->book_id = $book->id;
+                $book_img->image_path = $path;
+                $book_img->is_cover = TRUE;
+                $book_img->from_url = $request->from_url ? TRUE : FALSE;
+
+                if (!$book_img->save()) {
+                    return back()->with('error', 'Uh oh! We couldn\'t updated the cover photo of your copy of '.$book->title.'.');
+                }
+            } 
+            else {
+                return back()->with('error', 'Something went wrong when updating your book\'s cover photo.');
+            }
+        }
+
+        return redirect(route('user.books.index'))->with('success', 'Your copy of '.$book->title.' was updated.');
     }
 
     /**

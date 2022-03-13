@@ -15,12 +15,14 @@
 
       <card-basic title="Edit Book">
         <form id="edit-book-form"
-          method="PATCH"
+          method="POST"
           action="{{ route('user.books.update', ['book' => $book]) }}"
           enctype="multipart/form-data"
           class="flex flex-col gap-2 sm:gap-4">
 
           @csrf
+
+          @method('PATCH')
 
           <input-basic label="Title"
             type="text"
@@ -80,8 +82,10 @@
 
           <label>Cover Photo</label>
 
-          <img
-            src="{{ $book->coverPhoto ? Storage::disk('public')->url($book->coverPhoto->image_path) : '' }}">
+          @if($book->coverPhoto)
+            <img class="h-80 w-48 object-cover border-2 border-gray-200"
+              src="{{ $book->coverPhoto ? Storage::disk('public')->url($book->coverPhoto->image_path) : '' }}">
+          @endif
 
           <image-uploader
             name="cover_photo">
