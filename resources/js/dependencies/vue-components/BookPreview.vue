@@ -19,7 +19,7 @@
       :alt="title">
     <img v-else 
       class="h-96 w-auto object-cover bg-gray-200"
-      src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/2048px-No_image_available.svg.png"
+      src="img/NoImageAvailable.jpg"
       alt="No Image Available">
     
     <div class="p-4">
