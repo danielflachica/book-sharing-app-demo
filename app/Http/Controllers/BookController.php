@@ -131,7 +131,8 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        //
+        $uri = 'books';
+        return view('user.books.edit', compact('book', 'uri'));
     }
 
     /**
