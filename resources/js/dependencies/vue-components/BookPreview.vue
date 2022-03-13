@@ -3,6 +3,10 @@
     <options-dropdown 
       v-if="editable != null" 
       class="absolute top-2 right-2">
+      <a class="options-dropdown-item"
+        :href="edit_route">
+        Edit Book
+      </a>
       <confirm-button class="options-dropdown-item-danger"
         :title="'Are you sure you want to delete '+title+'?'"
         submit-button-text="Delete Book"
@@ -55,6 +59,7 @@
       "editable",
       "csrf",
       "delete_route",
+      "edit_route",
     ],
     data() {
       return {

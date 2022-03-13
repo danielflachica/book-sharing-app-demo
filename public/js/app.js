@@ -2088,9 +2088,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "book-preview",
-  props: ["cover_photo", "title", "isbn", "year", "added_by", "last_updated"],
+  props: ["cover_photo", "title", "isbn", "year", "added_by", "last_updated", "editable", "csrf", "delete_route", "edit_route"],
   data: function data() {
     return {
       textColor: 'text-primary'
@@ -2457,6 +2482,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _InputBasic_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./InputBasic.vue */ "./resources/js/dependencies/vue-components/InputBasic.vue");
+//
 //
 //
 //
@@ -4722,55 +4748,99 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "flex flex-col bg-white shadow border" }, [
-    _vm.cover_photo
-      ? _c("img", {
-          staticClass: "h-96 w-auto object-cover bg-gray-200",
-          attrs: { src: _vm.cover_photo_path, alt: _vm.title },
-        })
-      : _vm._e(),
-    _vm._v(" "),
-    _c("div", { staticClass: "p-4" }, [
-      _vm.title
-        ? _c("div", [
-            _vm._v("\n      Title: "),
-            _c("span", { class: _vm.textColor }, [_vm._v(_vm._s(_vm.title))]),
-          ])
+  return _c(
+    "div",
+    { staticClass: "flex flex-col bg-white shadow border relative" },
+    [
+      _vm.editable != null
+        ? _c(
+            "options-dropdown",
+            { staticClass: "absolute top-2 right-2" },
+            [
+              _c(
+                "a",
+                {
+                  staticClass: "options-dropdown-item",
+                  attrs: { href: _vm.edit_route },
+                },
+                [_vm._v("\n      Edit Book\n    ")]
+              ),
+              _vm._v(" "),
+              _c(
+                "confirm-button",
+                {
+                  staticClass: "options-dropdown-item-danger",
+                  attrs: {
+                    title: "Are you sure you want to delete " + _vm.title + "?",
+                    "submit-button-text": "Delete Book",
+                    href: _vm.delete_route,
+                    csrf: _vm.csrf,
+                    method: "DELETE",
+                  },
+                },
+                [_vm._v("\n      Delete Book\n    ")]
+              ),
+            ],
+            1
+          )
         : _vm._e(),
       _vm._v(" "),
-      _vm.isbn
-        ? _c("div", [
-            _vm._v("\n      ISBN-13: "),
-            _c("span", { class: _vm.textColor }, [_vm._v(_vm._s(_vm.isbn))]),
-          ])
-        : _vm._e(),
+      _vm.cover_photo
+        ? _c("img", {
+            staticClass: "h-96 w-auto object-cover bg-gray-200",
+            attrs: { src: _vm.cover_photo_path, alt: _vm.title },
+          })
+        : _c("img", {
+            staticClass: "h-96 w-auto object-cover bg-gray-200",
+            attrs: {
+              src: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/2048px-No_image_available.svg.png",
+              alt: "No Image Available",
+            },
+          }),
       _vm._v(" "),
-      _vm.year
-        ? _c("div", [
-            _vm._v("\n      Year Published: "),
-            _c("span", { class: _vm.textColor }, [_vm._v(_vm._s(_vm.year))]),
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.added_by
-        ? _c("div", [
-            _vm._v("\n      Added By: "),
-            _c("span", { class: _vm.textColor }, [
-              _vm._v(_vm._s(_vm.added_by)),
-            ]),
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.last_updated
-        ? _c("div", [
-            _vm._v("\n      Last Updated: "),
-            _c("span", { class: _vm.textColor }, [
-              _vm._v(_vm._s(_vm.last_updated)),
-            ]),
-          ])
-        : _vm._e(),
-    ]),
-  ])
+      _c("div", { staticClass: "p-4" }, [
+        _vm.title
+          ? _c("div", [
+              _vm._v("\n      Title: "),
+              _c("span", { class: _vm.textColor }, [_vm._v(_vm._s(_vm.title))]),
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.isbn
+          ? _c("div", [
+              _vm._v("\n      ISBN-13: "),
+              _c("span", { class: _vm.textColor }, [_vm._v(_vm._s(_vm.isbn))]),
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.year
+          ? _c("div", [
+              _vm._v("\n      Year Published: "),
+              _c("span", { class: _vm.textColor }, [_vm._v(_vm._s(_vm.year))]),
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.added_by
+          ? _c("div", [
+              _vm._v("\n      Added By: "),
+              _c("span", { class: _vm.textColor }, [
+                _vm._v(_vm._s(_vm.added_by)),
+              ]),
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.last_updated
+          ? _c("div", [
+              _vm._v("\n      Last Updated: "),
+              _c("span", { class: _vm.textColor }, [
+                _vm._v(_vm._s(_vm.last_updated)),
+              ]),
+            ])
+          : _vm._e(),
+      ]),
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -5166,6 +5236,7 @@ var render = function () {
                 _c("input-basic", {
                   staticClass: "w-full",
                   attrs: {
+                    label: "Image URL",
                     type: "url",
                     name: _vm.name,
                     pattern:
@@ -5175,6 +5246,7 @@ var render = function () {
                     footertext:
                       _vm.helpMsg +
                       " Please ensure that you have proper access rights.",
+                    required: "",
                   },
                 }),
                 _vm._v(" "),

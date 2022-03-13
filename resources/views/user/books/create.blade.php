@@ -1,10 +1,5 @@
 @extends('layouts.app.index')
 
-@section('styles')
-  {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.css" crossorigin="anonymous"> --}}
-  <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" crossorigin="anonymous"/>
-@endsection
-
 @section('content')
   <div class="container mx-auto p-4 md:p-8">
     <div class="flex flex-col gap-4 md:gap-8 pt-12">
@@ -126,8 +121,4 @@
 
     </div>
   </div>
-@endsection
-
-@section('scripts')
-  <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
 @endsection

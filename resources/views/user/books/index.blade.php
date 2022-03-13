@@ -27,7 +27,8 @@
               last_updated="{{ $book->updated_at->diffForHumans() }}"
               editable
               csrf="{{ csrf_token() }}"
-              delete_route="{{ route('user.books.destroy', ['book' => $book->id]) }}" />
+              delete_route="{{ route('user.books.destroy', ['book' => $book->id]) }}"
+              edit_route="{{ route('user.books.edit', ['book' => $book->id]) }}" />
             </book-preview>
           @endforeach
 
