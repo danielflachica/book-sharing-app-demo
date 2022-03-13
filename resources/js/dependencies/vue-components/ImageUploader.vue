@@ -39,7 +39,7 @@
         <input-basic
           class="hidden"
           type="hidden"
-          name="has_url"
+          name="from_url"
           value="1">
         </input-basic>
       </div>

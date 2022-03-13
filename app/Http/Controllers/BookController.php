@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Naxon\UrlUploadedFile\UrlUploadedFile;
 
 class BookController extends Controller
 {
@@ -58,7 +59,7 @@ class BookController extends Controller
         ]);
 
         // validate image url pattern
-        if ($request->has_url) {
+        if ($request->from_url) {
             if (!BookController::checkImageUrl($request->cover_photo)) {
                 return back()->with('error', 'The URL you specified does not point to a valid image.');
             }
@@ -78,24 +79,26 @@ class BookController extends Controller
         }
 
         // add cover photo to newly created book, if any
-        $path = null;
+        $uploaded_file = null;
+        // determine source of uploaded file (user or URL)
         if ($request->hasFile('cover_photo')) {
             // get photo from form
-            $upload = $request->file('cover_photo');
-            // upload image to storage
-            $path = BookController::uploadImage($upload, $book->id);
+            $uploaded_file = $request->file('cover_photo');
         }
-        elseif ($request->has_url) {
-            $path = $request->cover_photo;
+        elseif ($request->from_url) {
+            // get photo from url
+            $uploaded_file = UrlUploadedFile::createFromUrl($request->cover_photo);
         }
+        // save image to storage
+        $path = BookController::uploadImage($uploaded_file, $book->id);
         // save image path in database if not null
-        if ($request->hasFile('cover_photo') || $request->has_url) {
+        if ($request->hasFile('cover_photo') || $request->from_url) {
             if ($path) {
                 $book_img = new BookImage();
                 $book_img->book_id = $book->id;
                 $book_img->image_path = $path;
                 $book_img->is_cover = TRUE;
-                $book_img->has_url = $request->has_url ? TRUE : FALSE;
+                $book_img->from_url = $request->from_url ? TRUE : FALSE;
 
                 if (!$book_img->save()) {
                     return back()->with('error', 'Uh oh! We couldn\'t add a cover photo to your copy of '.$book->title.'.');
@@ -175,6 +178,7 @@ class BookController extends Controller
         if (
             (Str::startsWith($imgPath, 'https://') || Str::startsWith($imgPath, 'http://'))
             &&
+            // TO-DO: This doesn't check for GET parameters AFTER the file extension (e.g. filename.jpg?foo=bar)
             (Str::endsWith($imgPath, '.jpg') || Str::endsWith($imgPath, '.jpeg') || Str::endsWith($imgPath, '.png'))
         )
         {
