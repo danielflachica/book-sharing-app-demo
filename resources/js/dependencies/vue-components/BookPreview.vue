@@ -25,32 +25,36 @@
       </confirm-button>
     </options-dropdown>
 
-    <img v-if="cover_photo" 
-      class="h-96 w-auto object-cover bg-gray-200" 
-      :src="cover_photo" 
-      :alt="title">
-    <img v-else 
-      class="h-96 w-auto object-cover bg-gray-200"
-      src="img/NoImageAvailable.jpg"
-      alt="No Image Available">
-    
-    <div class="p-4">
-      <div>
-        Title: <span :class="textColor">{{ title }}</span>
+    <a :href="viewBookDetailsLink">
+      <div class="bg-gray-200">
+        <img v-if="cover_photo" 
+          class="h-96 w-full object-cover bg-gray-200" 
+          :src="cover_photo" 
+          :alt="title">
+        <img v-else 
+          class="h-96 w-full object-cover bg-gray-200"
+          src="img/NoImageAvailable.jpg"
+          alt="No Image Available">
       </div>
-      <div>
-        ISBN-13: <span :class="textColor">{{ isbn }}</span>
+      
+      <div class="p-4">
+        <div>
+          Title: <span :class="textColor">{{ title }}</span>
+        </div>
+        <div>
+          ISBN-13: <span :class="textColor">{{ isbn }}</span>
+        </div>
+        <div v-if="year">
+          Year Published: <span :class="textColor">{{ year }}</span>
+        </div>
+        <div v-if="added_by">
+          Added By: <span :class="textColor">{{ added_by }}</span>
+        </div>
+        <div v-if="last_updated">
+          Last Updated: <span :class="textColor">{{ last_updated }}</span>
+        </div>
       </div>
-      <div v-if="year">
-        Year Published: <span :class="textColor">{{ year }}</span>
-      </div>
-      <div v-if="added_by">
-        Added By: <span :class="textColor">{{ added_by }}</span>
-      </div>
-      <div v-if="last_updated">
-        Last Updated: <span :class="textColor">{{ last_updated }}</span>
-      </div>
-    </div>
+    </a>
   </div>
 </template>
 
@@ -69,6 +73,10 @@
       isbn: {
         type: String,
         required: true,
+      },
+      year: {
+        type: String,
+        required: false,
       },
       added_by: {
         type: String,
@@ -103,6 +111,13 @@
       return {
         textColor: 'text-primary',
       }
+    },
+    computed: {
+      viewBookDetailsLink() {
+        if(this.show_route !== '')
+          return this.show_route;
+        return null;
+      },
     },
   };
 </script>
