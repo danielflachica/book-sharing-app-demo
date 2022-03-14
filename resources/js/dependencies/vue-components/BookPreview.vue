@@ -3,7 +3,13 @@
     <options-dropdown 
       v-if="editable != null" 
       class="absolute top-2 right-2">
-      <a class="options-dropdown-item"
+      <a v-if="show_route"
+        class="options-dropdown-item"
+        :href="show_route">
+        View Book
+      </a>
+      <a v-if="edit_route" 
+        class="options-dropdown-item"
         :href="edit_route">
         Edit Book
       </a>
@@ -85,6 +91,10 @@
         required: false,
       },
       edit_route: {
+        type: String,
+        required: false,
+      },
+      show_route: {
         type: String,
         required: false,
       }
