@@ -28,7 +28,8 @@
               editable
               csrf="{{ csrf_token() }}"
               delete_route="{{ route('user.books.destroy', ['book' => $book->id]) }}"
-              edit_route="{{ route('user.books.edit', ['book' => $book->id]) }}" />
+              edit_route="{{ route('user.books.edit', ['book' => $book->id]) }}"
+              show_route="{{ route('user.books.show', ['book' => $book->id]) }}" />
             </book-preview>
           @endforeach
 

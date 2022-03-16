@@ -123,7 +123,8 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        //
+        $uri = 'books';
+        return view('user.books.show', compact('book', 'uri'));
     }
 
     /**

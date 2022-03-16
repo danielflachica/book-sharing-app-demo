@@ -5,7 +5,7 @@
       <span class="text-2xl">
         {{ Config::get('app.name', 'AutoAid PH') }}
       </span>
-      <span class="text-md text-gray-400">
+      <span class="text-md text-gray-400 md:text-justify">
         Quis consectetur anim mollit sit amet in irure. Amet irure nulla ea exercitation ut aute incididunt non mollit eiusmod.
       </span>
     </div>
