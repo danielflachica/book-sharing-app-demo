@@ -19,4 +19,9 @@ class Book extends Model
     {
         return $this->hasOne(User::class, 'id', 'added_by');
     }
+
+    public function authors()
+    {
+        return $this->hasMany(BookAuthor::class);
+    }
 }
